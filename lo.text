@@ -1,0 +1,40 @@
+from bs4 import BeautifulSoup
+
+html_doc = """
+<div class="result-item">
+  <div class="result-item-simple-area-container">
+    <div class="result-item-simple-area">
+      <div class="result-item-simple-area-period">
+        <div class="period-title">第115000049期</div>
+        <div class="period-date">開獎日期 115/05/01</div>
+      </div>
+      <div class="result-item-simple-area-order-container">
+        <div class="balls">
+          <span class="ball ball-orange">07</span>
+          <span class="ball ball-orange">22</span>
+          <span class="ball ball-orange">27</span>
+          <span class="ball ball-orange">35</span>
+          <span class="ball ball-orange">43</span>
+          <span class="ball ball-orange">48</span>
+        </div>
+        <span class="ball ball-red">45</span>
+      </div>
+    </div>
+  </div>
+</div>
+"""
+
+soup = BeautifulSoup(html_doc, 'html.parser')
+
+# 一般號碼
+orange_balls = soup.find_all('span', class_='ball ball-orange')
+
+# 特別號
+red_ball = soup.find('span', class_='ball ball-red')
+
+print("樂透開獎號碼：")
+
+for ball in orange_balls:
+    print(ball.text, end=' ')
+
+print("\n特別號：", red_ball.text)
